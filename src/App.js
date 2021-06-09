@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useState, useEffect, useReducer } from 'react'
 import CardCreator from './Components/Card'
+import ModalEffect from './Components/ModalEffect'
 
 /*import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -14,23 +15,29 @@ import Typography from '@material-ui/core/Typography';*/
 function App() {
 
   /* State */
-  const [productList, setProductList] = useState([{name: 'ERROR', description: 'ERROR'}])
+  const [productList, setProductList] = useState([])
 
   /* API Call to get product list */
   async function getProductList() {
 
-    fetch('http://52.26.193.201:3000/products/list')
+    await fetch('http://52.26.193.201:3000/products/list')
       .then(response => response.json())
-      .then(response => {console.log(response)
-                        setProductList([...response])})
+      .then(response => setProductList([...response]))
   }
 
-  useEffect(() => { getProductList() }, [])
+  useEffect(() => {
+    console.log('(App useEffect has been called)')
+    getProductList() }, [])
 
   /* Render */
-   return (
 
+  console.log('(The page has just rendered)')
+
+   return (
+    <>
     <CardCreator productList={productList} />
+
+    </>
 
     // <div className="App">
     //   <header className="App-header">
